@@ -1,0 +1,39 @@
+Test-And-Set: (Test outside the instruction)
+int TestAndSet(int *old_ptr, int new) {
+    int old = *old_ptr;     // fetch old value at old_ptr
+    *old_ptr = new;         store 'new' into old_ptr
+    return old;
+}
+
+
+Compare-And-Swap: (test if expected Inside the instruction)
+int CompareAndSwap(int *ptr, int exptected, int new) {
+    int original = *ptr;
+    if (original == expected)
+        *ptr = new;
+    return original;
+}
+
+
+Load-Linked and Store-Conditional: (Only one thread will succeed in updating flag to 1)
+int LoadLinked(int *ptr) {
+    return *ptr;
+}
+
+int StoreConditional(int *ptr, int value) {
+    if (no update to *ptr since LoadLinked to this address) {
+        *ptr = value;
+        return 1; // success!
+    } else {
+        return 0; // failed to update
+    }
+}
+
+
+Fetch-And-Add: (Ensures Progress for all Threads) (Ticket)
+int FatchAndAdd(int *ptr) {
+    int old = *ptr;
+    *ptr = old + 1;
+    return old;
+}
+
